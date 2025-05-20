@@ -1,18 +1,43 @@
-// src/config/swagger.js
 const swaggerJSDoc = require('swagger-jsdoc');
 
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Plataforma de Eventos API',
+      title: 'Plataforma de Gestión de Eventos',
       version: '1.0.0',
-      description: 'API para la gestión de eventos (Node.js + PostgreSQL)',
+      description: 'API REST para la gestión de usuarios, autenticación y eventos.',
     },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+      },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ['./src/interfaces/routes/*.js'],
+  // Paths a archivos de rutas/controladores con comentarios Swagger
+  apis: [
+    './src/interfaces/routes/userRoutes.js',
+    './src/interfaces/routes/eventRoutes.js'
+    
+  ],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = swaggerSpec;
+
+
