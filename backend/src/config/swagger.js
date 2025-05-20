@@ -33,6 +33,7 @@ const options = {
     './src/interfaces/routes/userRoutes.js',
     './src/interfaces/routes/eventRoutes.js',
     './src/interfaces/routes/reservationRoutes.js', 
+    
   ],
 };
 

@@ -62,12 +62,12 @@ router.post('/', authMiddleware('usuario'), async (req, res) => {
  *               items:
  *                 type: object
  *                 properties:
- *                   id:
+ *                   reservation_id:
  *                     type: integer
  *                   fecha_reserva:
  *                     type: string
  *                     format: date-time
- *                   id:
+ *                   event_id:
  *                     type: integer
  *                   nombre_evento:
  *                     type: string
@@ -146,3 +146,5 @@ router.delete('/:id', authMiddleware('usuario'), async (req, res) => {
 });
 
 module.exports = router;
+
+
