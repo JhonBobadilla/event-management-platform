@@ -33,6 +33,28 @@ const getEventsByOrganizer = async (organizador_id) => {
   return result.rows;
 };
 
+const getEventById = async (id) => {
+  const result = await pool.query(
+    'SELECT * FROM events WHERE id = $1',
+    [id]
+  );
+  return result.rows[0];
+};
+
+const incrementCupoActual = async (id) => {
+  await pool.query(
+    'UPDATE events SET cupo_actual = cupo_actual + 1 WHERE id = $1',
+    [id]
+  );
+};
+
+const decrementCupoActual = async (id) => {
+  await pool.query(
+    'UPDATE events SET cupo_actual = cupo_actual - 1 WHERE id = $1 AND cupo_actual > 0',
+    [id]
+  );
+};
+
 const updateEvent = async (id, organizador_id, updateData) => {
   const fields = [];
   const values = [];
@@ -61,11 +83,27 @@ const deleteEvent = async (id, organizador_id) => {
   return result.rows[0];
 };
 
+// Nuevo método para obtener eventos disponibles
+const getAvailableEvents = async () => {
+  const result = await pool.query(
+    `SELECT * FROM events 
+     WHERE estado = 'disponible' AND cupo_actual < cupo_maximo
+     ORDER BY creado_en DESC`
+  );
+  return result.rows;
+};
+
 module.exports = {
   createEvent,
   getEventsByOrganizer,
+  getEventById,
+  incrementCupoActual,
+  decrementCupoActual,
   updateEvent,
   deleteEvent,
+  getAvailableEvents, 
 };
+
+
 
 

@@ -5,6 +5,7 @@ const swaggerSpec = require('./config/swagger');
 const pool = require('./config/db');
 const userRoutes = require('./interfaces/routes/userRoutes');
 const eventRoutes = require('./interfaces/routes/eventRoutes');
+const reservationRoutes = require('./interfaces/routes/reservationRoutes');
 
 
 const app = express();
@@ -19,7 +20,8 @@ app.use('/api/users', userRoutes);
 // Rutas de eventos (crear, listar, etc.)
 app.use('/api/events', eventRoutes); 
 
-
+// Rutas de usuarios (reserva, cancela etc.)
+app.use('/api/reservations', reservationRoutes);
 
 // Healthcheck de base de datos y servidor
 app.get('/api/health', async (req, res) => {
