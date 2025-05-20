@@ -1,5 +1,10 @@
 const pool = require('../config/db');
 
+/**
+ * Crea un nuevo evento asociado a un organizador
+ * @param {Object} eventData - Datos del evento
+ * @returns {Promise<Object>} Evento creado
+ */
 const createEvent = async (eventData) => {
   const {
     nombre_evento,
@@ -19,7 +24,18 @@ const createEvent = async (eventData) => {
     (nombre_evento, tipo_evento, modalidad, descripcion, ciudad, direccion, telefono_contacto, requisitos, cupo_maximo, organizador_id)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
     RETURNING *`,
-    [nombre_evento, tipo_evento, modalidad, descripcion, ciudad, direccion, telefono_contacto, requisitos, cupo_maximo, organizador_id]
+    [
+      nombre_evento,
+      tipo_evento,
+      modalidad,
+      descripcion || '',
+      ciudad || '',
+      direccion || '',
+      telefono_contacto || '',
+      requisitos || '',
+      cupo_maximo,
+      organizador_id
+    ]
   );
 
   return result.rows[0];
@@ -83,7 +99,7 @@ const deleteEvent = async (id, organizador_id) => {
   return result.rows[0];
 };
 
-// Nuevo método para obtener eventos disponibles
+// Método para obtener eventos disponibles
 const getAvailableEvents = async () => {
   const result = await pool.query(
     `SELECT * FROM events 
@@ -103,6 +119,7 @@ module.exports = {
   deleteEvent,
   getAvailableEvents, 
 };
+
 
 
 

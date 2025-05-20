@@ -1,12 +1,20 @@
 const express = require('express');
 const createEvent = require('../../app/createEvent');
 const getEventsByOrganizer = require('../../app/getEventsByOrganizer');
-const updateEvent = require('../../app/updateEvent');   // asegúrate de tener este caso de uso
-const deleteEvent = require('../../app/deleteEvent');   // asegúrate de tener este caso de uso
+const updateEvent = require('../../app/updateEvent');
+const deleteEvent = require('../../app/deleteEvent');
 const getAvailableEvents = require('../../app/getAvailableEvents');
 const authMiddleware = require('../../shared/authMiddleware');
 
+// --- EXCEL UPLOAD DEPENDENCIAS Y CASO DE USO ---
+const multer = require('multer');
+const processExcelEvents = require('../../app/processExcelEvents'); // <-- Implementa este caso de uso
+
 const router = express.Router();
+
+// Configuración de Multer para archivos en memoria
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 /**
  * @swagger
@@ -62,6 +70,54 @@ router.post('/', authMiddleware('organizador'), async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
+/**
+ * @swagger
+ * /api/events/upload-excel:
+ *   post:
+ *     summary: Cargar múltiples eventos por archivo Excel (.xlsx) (solo organizadores)
+ *     tags:
+ *       - Eventos
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - multipart/form-data
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               file:
+ *                 type: string
+ *                 format: binary
+ *                 description: Archivo Excel (.xlsx) con los eventos.
+ *     responses:
+ *       200:
+ *         description: Resumen de la carga de eventos.
+ *       400:
+ *         description: Archivo inválido o errores en los datos.
+ *       401:
+ *         description: No autorizado.
+ */
+router.post(
+  '/upload-excel',
+  authMiddleware('organizador'),
+  upload.single('file'),
+  async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Debe adjuntar un archivo Excel.' });
+    }
+    try {
+      const organizadorId = req.user.id;
+      const resumen = await processExcelEvents(req.file.buffer, organizadorId);
+      res.status(200).json(resumen);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
+);
 
 /**
  * @swagger
@@ -279,4 +335,5 @@ router.get('/public', async (req, res) => {
 });
 
 module.exports = router;
+
 

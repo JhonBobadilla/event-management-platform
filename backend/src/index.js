@@ -8,6 +8,7 @@ const eventRoutes = require('./interfaces/routes/eventRoutes');
 const reservationRoutes = require('./interfaces/routes/reservationRoutes');
 
 
+
 const app = express();
 app.use(express.json());
 
@@ -22,6 +23,9 @@ app.use('/api/events', eventRoutes);
 
 // Rutas de usuarios (reserva, cancela etc.)
 app.use('/api/reservations', reservationRoutes);
+
+// Rutas de organizador (procesa excel)
+app.use('/api/events', eventRoutes);
 
 // Healthcheck de base de datos y servidor
 app.get('/api/health', async (req, res) => {
