@@ -8,13 +8,13 @@ const userRoutes = require('./interfaces/routes/userRoutes');
 const app = express();
 app.use(express.json());
 
-// Swagger docs
+// Documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Rutas de usuario
+// Rutas principales (usuarios: registro y login)
 app.use('/api/users', userRoutes);
 
-// Prueba de conexión a la DB (opcional al inicio)
+// Healthcheck de base de datos y servidor
 app.get('/api/health', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
@@ -24,9 +24,11 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+// Puerto de la app
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor escuchando en puerto ${PORT}`);
   console.log(`Swagger docs en http://localhost:${PORT}/api-docs`);
 });
+
 

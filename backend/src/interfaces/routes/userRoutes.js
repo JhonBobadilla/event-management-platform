@@ -68,16 +68,24 @@ router.post('/register', async (req, res) => {
  *       200:
  *         description: Login exitoso, retorna JWT y datos de usuario
  *       400:
- *         description: Credenciales incorrectas o datos inválidos
+ *         description: Datos inválidos
+ *       401:
+ *         description: Usuario o contraseña incorrectos
  */
 router.post('/login', async (req, res) => {
   try {
     const result = await loginUser(req.body);
     res.json(result);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    // Si es un error de credenciales, responde 401
+    if (err.message.includes('incorrectos')) {
+      res.status(401).json({ error: 'Usuario o contraseña incorrectos.' });
+    } else {
+      res.status(400).json({ error: err.message });
+    }
   }
 });
 
 module.exports = router;
+
 

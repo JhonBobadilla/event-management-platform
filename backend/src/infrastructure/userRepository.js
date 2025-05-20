@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 
+// Crear usuario
 const createUser = async (userData) => {
   const {
     nombre,
@@ -20,6 +21,7 @@ const createUser = async (userData) => {
   return result.rows[0];
 };
 
+// Buscar usuario por correo (para login o validaciones)
 const getUserByEmail = async (correo) => {
   const result = await pool.query(
     `SELECT * FROM users WHERE correo = $1`,
@@ -32,3 +34,4 @@ module.exports = {
   createUser,
   getUserByEmail
 };
+
