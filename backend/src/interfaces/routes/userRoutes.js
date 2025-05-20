@@ -1,6 +1,6 @@
-// src/interfaces/routes/userRoutes.js
 const express = require('express');
 const registerUser = require('../../app/registerUser');
+const loginUser = require('../../app/loginUser');
 
 const router = express.Router();
 
@@ -46,4 +46,38 @@ router.post('/register', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: Login de usuario (usuario u organizador)
+ *     tags:
+ *       - Usuarios
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               correo:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login exitoso, retorna JWT y datos de usuario
+ *       400:
+ *         description: Credenciales incorrectas o datos inválidos
+ */
+router.post('/login', async (req, res) => {
+  try {
+    const result = await loginUser(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 module.exports = router;
+
