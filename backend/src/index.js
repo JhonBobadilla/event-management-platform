@@ -4,7 +4,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const pool = require('./config/db');
 const userRoutes = require('./interfaces/routes/userRoutes');
-const eventRoutes = require('./interfaces/routes/eventRoutes'); // <--- Nuevo import
+const eventRoutes = require('./interfaces/routes/eventRoutes');
+
 
 const app = express();
 app.use(express.json());
@@ -16,7 +17,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/api/users', userRoutes);
 
 // Rutas de eventos (crear, listar, etc.)
-app.use('/api/events', eventRoutes); // <--- Nueva ruta añadida
+app.use('/api/events', eventRoutes); 
+
+
 
 // Healthcheck de base de datos y servidor
 app.get('/api/health', async (req, res) => {

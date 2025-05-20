@@ -25,6 +25,47 @@ const createEvent = async (eventData) => {
   return result.rows[0];
 };
 
-module.exports = {
-  createEvent
+const getEventsByOrganizer = async (organizador_id) => {
+  const result = await pool.query(
+    'SELECT * FROM events WHERE organizador_id = $1 ORDER BY creado_en DESC',
+    [organizador_id]
+  );
+  return result.rows;
 };
+
+const updateEvent = async (id, organizador_id, updateData) => {
+  const fields = [];
+  const values = [];
+  let idx = 1;
+
+  for (const [key, value] of Object.entries(updateData)) {
+    fields.push(`${key} = $${idx++}`);
+    values.push(value);
+  }
+  values.push(id, organizador_id);
+
+  const query = `
+    UPDATE events SET ${fields.join(', ')} 
+    WHERE id = $${idx++} AND organizador_id = $${idx}
+    RETURNING *`;
+
+  const result = await pool.query(query, values);
+  return result.rows[0];
+};
+
+const deleteEvent = async (id, organizador_id) => {
+  const result = await pool.query(
+    'DELETE FROM events WHERE id = $1 AND organizador_id = $2 RETURNING *',
+    [id, organizador_id]
+  );
+  return result.rows[0];
+};
+
+module.exports = {
+  createEvent,
+  getEventsByOrganizer,
+  updateEvent,
+  deleteEvent,
+};
+
+
