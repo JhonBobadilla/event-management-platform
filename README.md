@@ -1,6 +1,6 @@
 ### Event Management Platform ###
 
-Plataforma integral para la gestión de eventos, con backend en Node.js (Clean Architecture, PostgreSQL) y frontend en React (TailwindCSS). Incluye autenticación, registro, administración de eventos, reservas y carga masiva desde Excel.
+Plataforma integral para la gestión de eventos, con backend en Node.js (Clean Architecture, principios SOLIYD PostgreSQL) y frontend en React (TailwindCSS). Incluye autenticación, registro, administración de eventos, reservas y carga masiva desde Excel.
 
 ## Tabla de Contenidos #
 

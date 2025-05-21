@@ -401,16 +401,19 @@ const OrganizadorEvents = () => {
         <h2 className="text-center font-bold mt-40 mb-8 text-red-500 text-2xl sm:text-3xl md:text-4xl
         ">Carga masiva de eventos</h2>
         <input
-          type="file"
-          accept=".xlsx"
-          onChange={handleFileChange}
-          className="block mx-auto mb-3"
-        />
-        <div className="flex justify-center">
-          <button className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 mt-10 mb-30 rounded transition">
-            Cargar Excel
-          </button>
-        </div>
+  type="file"
+  accept=".xlsx"
+  onChange={handleFileChange}
+  className="block mx-auto mb-3"
+/>
+<div className="flex justify-center">
+  <button
+    className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 mt-10 mb-30 rounded transition"
+    onClick={uploadExcel}
+  >
+    Cargar Excel
+  </button>
+</div>
 
       </div>
     </div>
