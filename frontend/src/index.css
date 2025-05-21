@@ -2,3 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  margin: 0;
+  background-color: #dc2626; /* equivalente a Tailwind bg-red-600 */
+  /* Puedes ajustar este color con el que prefieras */
+}
+
+
