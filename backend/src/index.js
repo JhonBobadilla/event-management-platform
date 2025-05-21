@@ -6,12 +6,15 @@ const pool = require('./config/db');
 const userRoutes = require('./interfaces/routes/userRoutes');
 const eventRoutes = require('./interfaces/routes/eventRoutes');
 const reservationRoutes = require('./interfaces/routes/reservationRoutes');
+const cors = require('cors');
 
 
 
 const app = express();
 app.use(express.json());
 
+// Cors
+app.use(cors());
 // Documentación Swagger
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
