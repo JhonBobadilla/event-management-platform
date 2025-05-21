@@ -70,39 +70,49 @@ const AuthPage = ({ modoInicial }) => {
     }
   };
 
-    const handleRegister = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setMensaje("");
     try {
-        const response = await axios.post("http://localhost:3000/api/users/register", {
+      const response = await axios.post("http://localhost:3000/api/users/register", {
         nombre,
         correo,
         telefono,
         numero_documento: numeroDocumento,
         password,
         rol: rol.trim().toLowerCase(),
-        });
+      });
 
-        console.log("Respuesta registro:", response.data);
+      console.log("Respuesta registro:", response.data);
 
-        // Detecta éxito si hay mensaje de confirmación y usuario creado
-        if (response.data && response.data.message === "Usuario creado correctamente" && response.data.user) {
+      if (response.data && response.data.message === "Usuario creado correctamente" && response.data.user) {
         setMensaje("¡Registro exitoso! Ya puedes iniciar sesión.");
         setTimeout(() => {
-            navigate("/auth/login");
-            limpiarCampos();
+          navigate("/auth/login");
+          limpiarCampos();
         }, 1500);
-        } else {
+      } else {
         setMensaje("Hubo un error al registrarse.");
-        }
+      }
     } catch (error) {
-        setMensaje(error.response?.data?.message || "Hubo un error al registrarse.");
+      setMensaje(error.response?.data?.message || "Hubo un error al registrarse.");
     }
-    };
-
+  };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="min-h-screen bg-red-600 flex flex-col items-center justify-center p-6">
+      {/* Título afuera del cuadro */}
+      <div className="mb-40 text-center">
+        <h1 className="text-4xl sm:text-6xl md:text-8xl font-extrabold text-white">
+
+          EVENTOS DAVIVIENDA  
+        </h1>
+        <p className="text-gray-600 mt-2 max-w-md">
+          
+        </p>
+      </div>
+
+      {/* Cuadro blanco con el formulario */}
       <div className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-5 w-[370px]">
         <div className="flex mb-4 justify-center gap-4">
           <button
@@ -119,7 +129,7 @@ const AuthPage = ({ modoInicial }) => {
             onClick={() => cambiarModo("register")}
             className={`py-2 px-5 rounded-xl font-semibold text-lg transition ${
               modo === "register"
-                ? "bg-blue-600 text-white"
+                ? "bg-red-600 text-white"
                 : "bg-gray-200 text-gray-800"
             }`}
           >
@@ -129,7 +139,7 @@ const AuthPage = ({ modoInicial }) => {
 
         {modo === "login" ? (
           <form onSubmit={handleLogin} className="flex flex-col gap-5">
-            <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Login</h2>
+            <h2 className="text-2xl font-bold text-center text-red-400 mb-2">Acceso seguro</h2>
             <input
               type="email"
               className="border p-3 rounded-xl"
@@ -207,10 +217,10 @@ const AuthPage = ({ modoInicial }) => {
               required
             />
 
-            {mensaje && <div className="text-center text-blue-600">{mensaje}</div>}
+            {mensaje && <div className="text-center text-red-600">{mensaje}</div>}
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold text-lg transition"
+              className="bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold text-lg transition"
             >
               Registrarse
             </button>
@@ -222,6 +232,8 @@ const AuthPage = ({ modoInicial }) => {
 };
 
 export default AuthPage;
+
+
 
 
 
