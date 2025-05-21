@@ -116,6 +116,7 @@ const AuthPage = ({ modoInicial }) => {
         </h1>
         <p className="text-gray-600 mt-2 max-w-md"></p>
       </div>
+       
 
       {/* Cuadro blanco con el formulario */}
       <div className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-5 w-[370px]">
@@ -141,7 +142,7 @@ const AuthPage = ({ modoInicial }) => {
             Registrarse
           </button>
         </div>
-
+        
         {modo === "login" ? (
           <form onSubmit={handleLogin} className="flex flex-col gap-5">
             <h3 className="text-center font-bold mt-8 mb-8 text-red-500 text-2xl sm:text-3xl md:text-3xl">Acceso seguro</h3>
@@ -169,6 +170,16 @@ const AuthPage = ({ modoInicial }) => {
             >
               Iniciar sesión
             </button>
+            
+            <div className="mb-1 text-center">
+              <a href="http://localhost:3003/" className="hover:scale-110 transition" title="Ir al chat">
+                <h1 className="text-4xl sm:text-6xl md:text-40xl font-extrabold text-red-500">
+                  🗪
+                </h1>
+              </a>
+            </div>
+
+
           </form>
         ) : (
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
@@ -232,10 +243,14 @@ const AuthPage = ({ modoInicial }) => {
             </button>
           </form>
         )}
+        
       </div>
     </div>
   );
+  
 };
+
+
 
 export default AuthPage;
 
