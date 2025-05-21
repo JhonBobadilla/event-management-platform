@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
+
+
+
 const AuthPage = ({ modoInicial }) => {
   const [modo, setModo] = useState(modoInicial || "login"); // "login" o "register"
   const [rol, setRol] = useState("usuario");
@@ -103,13 +106,15 @@ const AuthPage = ({ modoInicial }) => {
     <div className="min-h-screen bg-red-600 flex flex-col items-center justify-center p-6">
       {/* Título afuera del cuadro */}
       <div className="mb-40 text-center">
-        <h1 className="text-4xl sm:text-6xl md:text-8xl font-extrabold text-white">
+        <h1 className="text-4xl sm:text-6xl md:text-6xl font-extrabold text-white">
 
-          EVENTOS DAVIVIENDA  
+          Bienvenido a nuestra   
         </h1>
-        <p className="text-gray-600 mt-2 max-w-md">
-          
-        </p>
+        <h1 className="text-4xl sm:text-6xl md:text-6xl font-extrabold text-white">
+
+          Central de Eventos   
+        </h1>
+        <p className="text-gray-600 mt-2 max-w-md"></p>
       </div>
 
       {/* Cuadro blanco con el formulario */}
@@ -119,7 +124,7 @@ const AuthPage = ({ modoInicial }) => {
             onClick={() => cambiarModo("login")}
             className={`py-2 px-5 rounded-xl font-semibold text-lg transition ${
               modo === "login"
-                ? "bg-red-600 text-white"
+                ? "bg-red-500 text-white"
                 : "bg-gray-200 text-gray-800"
             }`}
           >
@@ -129,7 +134,7 @@ const AuthPage = ({ modoInicial }) => {
             onClick={() => cambiarModo("register")}
             className={`py-2 px-5 rounded-xl font-semibold text-lg transition ${
               modo === "register"
-                ? "bg-red-600 text-white"
+                ? "bg-red-500 text-white"
                 : "bg-gray-200 text-gray-800"
             }`}
           >
@@ -139,7 +144,7 @@ const AuthPage = ({ modoInicial }) => {
 
         {modo === "login" ? (
           <form onSubmit={handleLogin} className="flex flex-col gap-5">
-            <h2 className="text-2xl font-bold text-center text-red-400 mb-2">Acceso seguro</h2>
+            <h3 className="text-center font-bold mt-8 mb-8 text-red-500 text-2xl sm:text-3xl md:text-3xl">Acceso seguro</h3>
             <input
               type="email"
               className="border p-3 rounded-xl"
@@ -159,7 +164,8 @@ const AuthPage = ({ modoInicial }) => {
             {mensaje && <div className="text-red-600 text-center">{mensaje}</div>}
             <button
               type="submit"
-              className="bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold text-lg transition"
+              className="bg-red-500 hover:bg-red-600 text-white text-xl px-5 py-2 mt-10 mb-30 rounded-xl transition"
+
             >
               Iniciar sesión
             </button>
@@ -220,7 +226,7 @@ const AuthPage = ({ modoInicial }) => {
             {mensaje && <div className="text-center text-red-600">{mensaje}</div>}
             <button
               type="submit"
-              className="bg-red-600 hover:bg-red-700 text-white py-3 rounded-xl font-semibold text-lg transition"
+              className="bg-red-500 hover:bg-red-700 text-white py-3 rounded-xl font-semibold text-lg transition font-bold"
             >
               Registrarse
             </button>

@@ -167,8 +167,11 @@ const OrganizadorEvents = () => {
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-none my-10">
 
-      <h1 className="text-center text-6xl font-bold mt-16 mb-24 text-red-500">SECCIÓN DE EVENTOS</h1>
-      <h2 className="text-center text-4xl font-bold mt-40 mb-8 text-red-500">Crear nuevo evento</h2>
+      <h1 className="text-center font-bold mt-16 mb-6 text-red-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">SECCIÓN DE EVENTOS</h1>
+      <h1 className="text-center font-bold mt-6 mb-6 text-red-500 text-3xl sm:text-4xl md:text-5xl lg:text-6xl">Organizador</h1>
+
+      <h2 className="text-center font-bold mt-40 mb-8 text-red-500 text-2xl sm:text-3xl md:text-4xl
+      ">Crear nuevo evento</h2>
       {mensaje && <div className="mb-4 text-red-600 font-semibold">{mensaje}</div>}
 
       {/* Formulario creación */}
@@ -261,7 +264,8 @@ const OrganizadorEvents = () => {
       {/* Lista y edición */}
       
       <ul className="space-y-6">
-      <h2 className="text-center text-4xl font-bold mt-40 mb-8 text-red-500">Eventos registrados</h2>
+      <h2 className="text-center font-bold mt-40 mb-8 text-red-500 text-2xl sm:text-3xl md:text-4xl
+      ">Eventos registrados</h2>
         {events.map((evt) => (
           
           <li key={evt.id} className="border border-red-300 rounded-lg p-5 shadow-sm bg-white">
@@ -272,6 +276,7 @@ const OrganizadorEvents = () => {
                   value={editForm.nombre_evento}
                   onChange={handleEditChange}
                   className="border border-gray-300 p-2 rounded-md mb-2 w-full focus:outline-none focus:ring-2 focus:ring-red-600 transition"
+                  
                 />
                 <input
                   name="descripcion"
@@ -360,7 +365,7 @@ const OrganizadorEvents = () => {
               </>
             ) : (
               <>
-                <h3 className="font-semibold text-red-700">{evt.nombre_evento}</h3>
+                <h3 className="text-left font-bold mt-8 mb-8 text-red-500 text-2xl sm:text-3xl md:text-3xl">{evt.nombre_evento}</h3>
                 <p>Tipo: {evt.tipo_evento}</p>
                 <p>Modalidad: {evt.modalidad}</p>
                 <p>Descripción: {evt.descripcion}</p>
@@ -375,11 +380,11 @@ const OrganizadorEvents = () => {
                     onClick={() => startEdit(evt)}
                     className="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded mr-3 transition"
                   >
-                    Editar
+                    Editar     
                   </button>
                   <button
                     onClick={() => handleDelete(evt.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition"
+                    className="bg-red-500 hover:bg-red-600 text-white px-5 py-2 mt-10 mb-30 rounded transition"
                   >
                     Eliminar
                   </button>
@@ -393,7 +398,8 @@ const OrganizadorEvents = () => {
 
       {/* Carga masiva */}
       <div className="mt-10 border-t pt-6">
-        <h2 className="text-center text-4xl font-bold mt-40 mb-40 text-red-500">Carga masiva de eventos</h2>
+        <h2 className="text-center font-bold mt-40 mb-8 text-red-500 text-2xl sm:text-3xl md:text-4xl
+        ">Carga masiva de eventos</h2>
         <input
           type="file"
           accept=".xlsx"
