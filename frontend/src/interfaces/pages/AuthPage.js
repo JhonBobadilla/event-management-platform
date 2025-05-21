@@ -172,7 +172,7 @@ const AuthPage = ({ modoInicial }) => {
           </form>
         ) : (
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold text-center text-gray-800 mb-2">Registro</h2>
+            <h3 className="text-center font-bold mt-8 mb-8 text-red-500 text-2xl sm:text-3xl md:text-3xl">Registro</h3>
 
             <label className="mb-2 font-semibold text-gray-700">Selecciona tu rol</label>
             <select
