@@ -139,7 +139,7 @@ const AuthPage = ({ modoInicial }) => {
                 : "bg-gray-200 text-gray-800"
             }`}
           >
-            Registrarse
+            Regístrate
           </button>
         </div>
         
