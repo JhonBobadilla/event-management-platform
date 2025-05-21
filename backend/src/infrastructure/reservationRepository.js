@@ -12,7 +12,23 @@ const createReservation = async ({ user_id, event_id }) => {
 
 const getReservationsByUser = async (user_id) => {
   const result = await pool.query(
-    `SELECT r.id, r.fecha_reserva, e.*
+    `SELECT 
+        r.id AS reservation_id,        
+        r.fecha_reserva, 
+        e.id AS event_id,              
+        e.nombre_evento,
+        e.tipo_evento,
+        e.modalidad,
+        e.descripcion,
+        e.ciudad,
+        e.direccion,
+        e.telefono_contacto,
+        e.requisitos,
+        e.cupo_maximo,
+        e.cupo_actual,
+        e.estado,
+        e.organizador_id,
+        e.creado_en
      FROM reservations r
      JOIN events e ON r.event_id = e.id
      WHERE r.user_id = $1
@@ -44,4 +60,3 @@ module.exports = {
   checkReservationExists,
   deleteReservation,
 };
-

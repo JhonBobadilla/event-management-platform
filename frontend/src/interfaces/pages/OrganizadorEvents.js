@@ -69,29 +69,57 @@ const OrganizadorEvents = () => {
   };
 
   // Editar evento
-  const startEdit = (evt) => {
+const startEdit = (evt) => {
+    console.log("startEdit -> evt recibido:", evt); 
     setEditId(evt.id);
-    setEditForm({ ...evt });
-  };
+    const nuevoEditForm = {
+        id: evt.id,
+        nombre_evento: evt.nombre_evento || "",
+        
+        tipo_evento: evt.tipo_evento || "",
+        modalidad: evt.modalidad || "",
+        descripcion: evt.descripcion || "",
+        ciudad: evt.ciudad || "",
+        direccion: evt.direccion || "",
+        telefono_contacto: evt.telefono_contacto || "",
+        requisitos: evt.requisitos || "",
+        cupo_maximo: evt.cupo_maximo || 0,
+    };
+    console.log("Nuevo estado editForm que se va a setear:", nuevoEditForm); 
+    setEditForm(nuevoEditForm);
+};
 
-  const handleEditChange = (e) => {
+const handleEditChange = (e) => {
     const { name, value } = e.target;
-    setEditForm((prev) => ({ ...prev, [name]: value }));
-  };
+    setEditForm((prev) => {
+        const updated = { ...prev, [name]: value };
+        console.log(`Editando campo: ${name}, valor: ${value}`);
+        console.log("editForm actualizado:", updated);
+        return updated;
+    });
+};
 
-  const saveEdit = async () => {
+const saveEdit = async () => {
     setMensaje("");
     try {
-      await axios.put(`http://localhost:3000/api/events/${editId}`, editForm, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setMensaje("Evento actualizado");
-      setEditId(null);
-      fetchEvents();
-    } catch {
-      setMensaje("Error al actualizar evento");
+        // Extraemos id para enviarlo en la URL, no en el body
+        const { id, ...bodyWithoutId } = editForm;
+        console.log("Enviando PUT a backend con:", bodyWithoutId);
+
+        await axios.put(`http://localhost:3000/api/events/${id}`, bodyWithoutId, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        setMensaje("Evento actualizado");
+        setEditId(null);
+        fetchEvents();
+    } catch (error) {
+        setMensaje("Error al actualizar evento");
+        console.log("ERROR al actualizar evento:", error);
     }
-  };
+};
+
+  // cancela eventos reservados  
 
   const cancelEdit = () => {
     setEditId(null);
@@ -241,7 +269,78 @@ const OrganizadorEvents = () => {
                   onChange={handleEditChange}
                   className="border p-1 rounded mb-1 w-full"
                 />
-                {/* Agrega inputs para otros campos igual */}
+                <input
+                    name="descripcion"
+                    value={editForm.descripcion}
+                    onChange={handleEditChange}
+                    className="border p-1 rounded mb-1 w-full"
+                    placeholder="Descripción"
+                    />
+
+                <select
+  name="tipo_evento"
+  value={editForm.tipo_evento}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+>
+  <option value="educativo">Educativo</option>
+  <option value="empresarial">Empresarial</option>
+  <option value="deportivo">Deportivo</option>
+  <option value="artístico">Artístico</option>
+</select>
+
+<select
+  name="modalidad"
+  value={editForm.modalidad}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+>
+  <option value="virtual">Virtual</option>
+  <option value="presencial">Presencial</option>
+</select>
+
+<input
+  name="ciudad"
+  value={editForm.ciudad}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+  placeholder="Ciudad"
+/>
+
+<input
+  name="direccion"
+  value={editForm.direccion}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+  placeholder="Dirección o URL"
+/>
+
+<input
+  name="telefono_contacto"
+  value={editForm.telefono_contacto}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+  placeholder="Teléfono de contacto"
+/>
+
+<input
+  name="requisitos"
+  value={editForm.requisitos}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+  placeholder="Requisitos"
+/>
+
+<input
+  name="cupo_maximo"
+  type="number"
+  value={editForm.cupo_maximo}
+  onChange={handleEditChange}
+  className="border p-1 rounded mb-1 w-full"
+  placeholder="Cupo máximo"
+  min="0"
+/>
+    
                 <button
                   onClick={saveEdit}
                   className="bg-blue-600 text-white rounded px-3 py-1 mr-2"

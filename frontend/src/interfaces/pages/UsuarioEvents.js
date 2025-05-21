@@ -102,6 +102,8 @@ const UsuarioEvents = () => {
               <p>Fecha reserva: {new Date(res.fecha_reserva).toLocaleString()}</p>
               <p>Tipo: {res.tipo_evento}</p>
               <p>Modalidad: {res.modalidad}</p>
+              
+              
             </div>
             <button
               onClick={() => cancelarReserva(res.reservation_id)}
